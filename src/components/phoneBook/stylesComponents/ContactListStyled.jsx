@@ -28,6 +28,7 @@ export const ContBotton = styled.div``;
 
 export const Button = styled.button`
   cursor: pointer;
+  color: white;
   padding: 3px 10px;
   font-size: 1 rem;
   margin-left: 20px;

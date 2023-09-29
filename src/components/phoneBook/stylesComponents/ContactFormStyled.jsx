@@ -35,6 +35,7 @@ export const Button = styled.button`
   border-radius: 15px;
   text-transform: capitalize;
   background-color: rgb(61, 129, 200);
+  color: white;
   box-shadow: 0 0 5px gray;
   cursor: pointer;
 

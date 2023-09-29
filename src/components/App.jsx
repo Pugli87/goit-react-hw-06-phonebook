@@ -1,6 +1,11 @@
 import React from 'react';
+import { Layout } from 'components/Layout/Layout';
 import Phonebook from './phoneBook/Phonebook';
 
 export const App = () => {
-  return <Phonebook />;
+  return (
+    <Layout>
+      <Phonebook />
+    </Layout>
+  );
 };
