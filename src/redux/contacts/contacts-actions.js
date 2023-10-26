@@ -15,21 +15,3 @@ const changeFilter = createAction('contacts/Filter');
 
 export default { addContact, deleteContact, changeFilter };
 
-// const addContact = (name, number) => ({
-//     type: types.ADD,
-//     payload: {
-//         id: nanoid(6),
-//         name,
-//         number,
-//     }
-// })
-
-// const deleteContact = contactId => ({
-//     type: types.DELETE,
-//     payload: contactId,
-// })
-
-// const changeFilter = value => ({
-//     type: types.CHANGE_FILTER,
-//     payload:value,
-// })

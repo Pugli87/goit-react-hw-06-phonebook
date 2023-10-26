@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import s from './InputName.module.css';
+import css from './InputName.module.css';
 
 const InputName = ({ name, onNameChange }) => {
   return (
@@ -12,7 +12,7 @@ const InputName = ({ name, onNameChange }) => {
       placeholder="Enter name"
       value={name}
       onChange={onNameChange}
-      className={s.input}
+      className={css.input}
     />
   );
 };

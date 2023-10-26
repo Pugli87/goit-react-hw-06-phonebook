@@ -1,16 +1,18 @@
 import PropTypes from 'prop-types';
-import s from './Section.module.css';
+import css from './Section.module.css';
 
 export default function Section({ title, children }) {
-    return <section className={s.section}>
-        <div className={s.container}>
-            <h2 className={s.title}>{title}</h2>
+  return (
+    <section className={css.section}>
+      <div className={css.container}>
+        <h2 className={css.title}>{title}</h2>
         {children}
-        </div>
+      </div>
     </section>
+  );
 }
 
 Section.propTypes = {
-    title: PropTypes.string,
-    children: PropTypes.node,
-}
+  title: PropTypes.string,
+  children: PropTypes.node,
+};
