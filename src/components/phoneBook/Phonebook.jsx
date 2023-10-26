@@ -1,76 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import ContactForm from './ContactForm/ContactForm';
-import ContactList from './ContactList/ContactList';
-import Filter from './Filter/Filter';
-import { Container, Title, Heading2 } from './stylesComponents/PhonebookStyled';
-import PropTypes from 'prop-types';
+import Wrapper from 'components/phonebook/Wrapper';
+import Section from 'components/phonebook/Section';
+import ContactForm from 'components/ContactForm';
+import Filter from 'components/phonebook/Filter';
+import ContactList from 'components/phonebook/ContactList';
+import Notification from 'components/phonebook/Notification';
+import { useSelector } from 'react-redux';
+import { getItems } from 'redux/contacts/contacts-selectors';
 
-const Phonebook = () => {
-  const [contacts, setContacts] = useState([]);
-  const [filter, setFilter] = useState('');
-
-  const updateLocalStorage = contacts => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  };
-
-  const addContact = newContact => {
-    setContacts(prevContacts => {
-      const newContacts = [...prevContacts, newContact];
-
-      updateLocalStorage(newContacts);
-      return [...prevContacts, newContact];
-    });
-  };
-
-  const deleteContact = id => {
-    setContacts(prevContacts => {
-      const delContact = prevContacts.filter(contact => contact.id !== id);
-      updateLocalStorage(delContact);
-      return delContact;
-    });
-  };
-
-  const setFilterValue = filterValue => {
-    setFilter(filterValue);
-  };
-
-  const filteredContacts = () => {
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
-    );
-  };
-
-  useEffect(() => {
-    const storedContacts = localStorage.getItem('contacts');
-    if (storedContacts) {
-      setContacts(JSON.parse(storedContacts));
-    }
-  }, []);
+function Phonebook() {
+  const contacts = useSelector(getItems);
 
   return (
-    <>
-      <Title>phonebook</Title>
-      <Container>
-        <ContactForm addContact={addContact} contacts={contacts} />
+    <Wrapper>
+      <Section title={'Phonebook'}>
+        <ContactForm />
+      </Section>
 
-        {contacts.length > 0 && (
-          <>
-            <Heading2>find contacts by name</Heading2>
-            <Filter filter={filter} setFilter={setFilterValue} />
-          </>
+      <Section title={'Contacts'}>
+        <Filter />
+        {contacts.length > 0 ? (
+          <ContactList />
+        ) : (
+          <Notification message="There are no contacts yet" />
         )}
-        <ContactList
-          contacts={filteredContacts()}
-          deleteContact={deleteContact}
-        />
-      </Container>
-    </>
+      </Section>
+    </Wrapper>
   );
-};
+}
 
 export default Phonebook;
-
-Phonebook.propTypes = {
-  addContact: PropTypes.func,
-  deleteContact: PropTypes.func,
-};

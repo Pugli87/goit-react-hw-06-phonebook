@@ -1,26 +1,27 @@
-import React from 'react';
-import { Input } from '../stylesComponents/FilterStyled';
-import PropTypes from 'prop-types';
+import Label from '../../ContactForm/Label';
+import { useDispatch, useSelector } from 'react-redux';
+import actions from '../../../redux/contacts/contacts-actions';
+import { getFilter } from 'redux/contacts/contacts-selectors';
 
-function Filter({ filter, setFilter }) {
-  const handleFilterChange = e => {
-    setFilter(e.target.value);
+const Filter = () => {
+  const filterValue = useSelector(getFilter);
+  const dispatch = useDispatch();
+
+  const handleFilterChange = event => {
+    dispatch(actions.changeFilter(event.currentTarget.value));
   };
 
   return (
-    <Input
-      type="text"
-      name="filter"
-      placeholder="Search by name"
-      value={filter}
-      onChange={handleFilterChange}
-    />
+    <Label labelTitle={'Find contacts by name'}>
+      <input
+        type="text"
+        name="filter"
+        placeholder="Search name"
+        value={filterValue}
+        onChange={handleFilterChange}
+      />
+    </Label>
   );
-}
-
-Filter.propTypes = {
-  filter: PropTypes.string.isRequired,
-  setFilter: PropTypes.func.isRequired,
 };
 
 export default Filter;

@@ -5,7 +5,7 @@ import { getItems, getFilter } from 'redux/contacts/contacts-selectors';
 import Label from './Label';
 import InputName from './InputName';
 import InputNumber from './InputNumber';
-import Button from 'components/Button';
+import Button from 'components/phonebook/Button';
 import css from './ContactForm.module.css';
 
 function ContactForm() {

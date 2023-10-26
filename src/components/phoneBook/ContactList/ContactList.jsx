@@ -1,50 +1,34 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {
-  Ul,
-  ContInfo,
-  ContactItems,
-  ContactName,
-  ContactNumber,
-  ContBotton,
-  Button,
-} from '../stylesComponents/ContactListStyled';
+import { useDispatch, useSelector } from 'react-redux';
+import actions from '../../../redux/contacts/contacts-actions';
+import { getItems, getFilter } from 'redux/contacts/contacts-selectors';
+import css from './ContactList.module.css';
 
-function ContactItem({ contact, deleteContact }) {
-  const handleDelete = () => {
-    deleteContact(contact.id);
+const ContactList = () => {
+  const contacts = useSelector(getItems);
+  const filterValue = useSelector(getFilter);
+
+  const dispatch = useDispatch();
+  const handleDeleteContact = contactId => {
+    dispatch(actions.deleteContact(contactId));
   };
 
   return (
-    <ContactItems>
-      <ContInfo>
-        <ContactName>{contact.name}</ContactName>
-        <ContactNumber>{contact.number}</ContactNumber>
-      </ContInfo>
-      <ContBotton>
-        <Button onClick={handleDelete}>delete</Button>
-      </ContBotton>
-    </ContactItems>
+    <ul className={css.contacts}>
+      {contacts
+        .filter(({ name }) => name.toLowerCase().includes(filterValue.trim()))
+        .map(({ id, name, number }) => (
+          <li key={id} className={css.item}>
+            <div>
+              <p className={css.name}>{name}</p>
+              <p className={css.number}>{number}</p>
+            </div>
+            <button type="button" onClick={() => handleDeleteContact(id)} className={css.delete}>
+              <i className="fa fa-times" aria-hidden="true"></i>
+            </button>
+          </li>
+        ))}
+    </ul>
   );
-}
-
-function ContactList({ contacts, deleteContact }) {
-  return (
-    <Ul>
-      {contacts.map(contact => (
-        <ContactItem
-          key={contact.id}
-          contact={contact}
-          deleteContact={deleteContact}
-        />
-      ))}
-    </Ul>
-  );
-}
-
-ContactItem.propTypes = {
-  contact: PropTypes.object.isRequired,
-  deleteContact: PropTypes.func.isRequired,
 };
 
 export default ContactList;
